@@ -1,31 +1,21 @@
 import os
-from importlib import import_module
-
 from dotenv import load_dotenv
-
-try:
-    sqlalchemy = import_module("sqlalchemy")
-    sqlalchemy_orm = import_module("sqlalchemy.orm")
-except ModuleNotFoundError as exc:
-    if exc.name and exc.name.startswith("sqlalchemy"):
-        raise RuntimeError(
-            "SQLAlchemy is required. Install it with: pip install sqlalchemy"
-        ) from exc
-    raise
-
-create_engine = sqlalchemy.create_engine
-declarative_base = sqlalchemy_orm.declarative_base
-sessionmaker = sqlalchemy_orm.sessionmaker
+from sqlalchemy import create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "sqlite:///./fallback_dev.db"  # Fallback when DATABASE_URL is not provided (e.g. in CI)
+)
 
-if not DATABASE_URL:
-    raise RuntimeError("DATABASE_URL is not set")
+# Connect arguments needed only for SQLite
+connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
 
 engine = create_engine(
     DATABASE_URL,
+    connect_args=connect_args,
     pool_pre_ping=True,
 )
 
@@ -40,7 +30,6 @@ Base = declarative_base()
 
 def get_db():
     db = SessionLocal()
-
     try:
         yield db
     finally:

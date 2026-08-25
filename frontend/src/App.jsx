@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 import ProjectCard from "./components/ProjectCard";
 import { checkHealth, fetchProjects, createProject } from "./services/api";
 
