@@ -34,3 +34,24 @@ class AIReviewResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class DeploymentCreate(BaseModel):
+    project_id: int
+    commit_hash: Optional[str] = None
+    environment: Optional[str] = "production"
+
+
+class DeploymentResponse(BaseModel):
+    id: int
+    project_id: int
+    commit_hash: str
+    status: str
+    environment: str
+    deployment_url: Optional[str] = None
+    logs: Optional[str] = None
+    ai_risk: Optional[str] = None
+    created_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True

@@ -30,6 +30,26 @@ export default function Navbar({ activeTab, setActiveTab }) {
         </button>
         <button
           style={
+            activeTab === "deployments"
+              ? { ...styles.link, ...styles.activeLink }
+              : styles.link
+          }
+          onClick={() => setActiveTab("deployments")}
+        >
+          🚀 Deployments
+        </button>
+        <button
+          style={
+            activeTab === "monitoring"
+              ? { ...styles.link, ...styles.activeLink }
+              : styles.link
+          }
+          onClick={() => setActiveTab("monitoring")}
+        >
+          📊 Monitoring
+        </button>
+        <button
+          style={
             activeTab === "ai-review"
               ? { ...styles.link, ...styles.activeLink }
               : styles.link
@@ -69,15 +89,15 @@ const styles = {
   },
   links: {
     display: "flex",
-    gap: "1rem",
+    gap: "0.5rem",
   },
   link: {
     background: "none",
     border: "none",
     color: "#a0aec0",
-    fontSize: "0.95rem",
+    fontSize: "0.9rem",
     cursor: "pointer",
-    padding: "0.5rem 1rem",
+    padding: "0.5rem 0.8rem",
     borderRadius: "6px",
     transition: "all 0.2s",
   },
