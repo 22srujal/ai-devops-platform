@@ -26,6 +26,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    env_file:
+      - ./backend/.env
     environment:
       DATABASE_URL: postgresql+psycopg://srujalsau22:devpassword@postgres:5432/ai_devops
     ports:

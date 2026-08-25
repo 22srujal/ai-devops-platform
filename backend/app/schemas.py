@@ -1,25 +1,36 @@
-from importlib import import_module
-
-
-try:
-    BaseModel = import_module("pydantic").BaseModel
-except ModuleNotFoundError:
-    class BaseModel:
-        """Fallback used only when Pydantic is unavailable in the environment."""
-
-        def __init_subclass__(cls, **kwargs):
-            return super().__init_subclass__(**kwargs)
+from typing import List, Optional
+from datetime import datetime
+from pydantic import BaseModel
 
 
 class ProjectCreate(BaseModel):
     name: str
-    description: str | None = None
+    description: Optional[str] = None
 
 
 class ProjectResponse(BaseModel):
     id: int
     name: str
-    description: str | None = None
+    description: Optional[str] = None
+
+    class Config:
+        from_attributes = True
+
+
+class AIReviewRequest(BaseModel):
+    code_snippet: str
+    project_id: Optional[int] = None
+
+
+class AIReviewResponse(BaseModel):
+    id: Optional[int] = None
+    project_id: Optional[int] = None
+    provider: Optional[str] = "ai-engine"
+    risk_level: str
+    summary: str
+    issues: List[str]
+    recommendations: List[str]
+    created_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True

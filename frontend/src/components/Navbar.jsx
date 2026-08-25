@@ -28,6 +28,16 @@ export default function Navbar({ activeTab, setActiveTab }) {
         >
           Projects
         </button>
+        <button
+          style={
+            activeTab === "ai-review"
+              ? { ...styles.link, ...styles.activeLink }
+              : styles.link
+          }
+          onClick={() => setActiveTab("ai-review")}
+        >
+          🤖 AI Code Review
+        </button>
       </div>
     </nav>
   );
@@ -65,7 +75,7 @@ const styles = {
     background: "none",
     border: "none",
     color: "#a0aec0",
-    fontSize: "1rem",
+    fontSize: "0.95rem",
     cursor: "pointer",
     padding: "0.5rem 1rem",
     borderRadius: "6px",
