@@ -66,19 +66,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Build Backend Docker Image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./backend
-          push: false
-          tags: ai-devops-backend:test
+        run: docker build -t ai-devops-backend:test ./backend
 
       - name: Build Frontend Docker Image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./frontend
-          push: false
-          tags: ai-devops-frontend:test
+        run: docker build -t ai-devops-frontend:test ./frontend
